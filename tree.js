@@ -64,30 +64,33 @@ class Tree {
   }
 
   deleteNode(root, value) {
-    if (!root) {
-      return null;
-    }
-    if (value < root.value) {
-      root.left = this.deleteNode(root.left, value);
-    } else if (value > root.value) {
+    if (!root) return null;
+    if (value < root.value) root.left = this.deleteNode(root.left, value);
+    else if (value > root.value)
       root.right = this.deleteNode(root.right, value);
-    } else {
-      if (!root.left && !root.right) {
-        root = null;
-      } else if (!root.left) {
-        root = root.right;
-      } else if (!root.right) {
-        root = root.left;
-      } else {
-        let minRight = root.right;
-        while (minRight.left) {
-          minRight = minRight.left;
-        }
-        root.value = minRight.value;
-        root.right = this.deleteNode(root.right, minRight.value);
-      }
+    else if (!root.left) return root.right;
+    else if (!root.right) return root.left;
+    else {
+      let minRight = root.right;
+      while (minRight.left) minRight = minRight.left;
+      root.value = minRight.value;
+      root.right = this.deleteNode(root.right, minRight.value);
     }
     return root;
+  }
+
+  find(root, value) {
+    if (!root) {
+      return false;
+    } else {
+      if (root.value === value) {
+        return true;
+      } else if (value < root.left) {
+        return this.find(root.left, value);
+      } else {
+        return this.find(root.right, value);
+      }
+    }
   }
 }
 
@@ -100,5 +103,7 @@ bst.insert(50);
 
 prettyPrint(bst.root);
 
-bst.delete(30);
+bst.delete(45);
 prettyPrint(bst.root);
+
+console.log(bst.find(bst.root, 30));
