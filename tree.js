@@ -92,18 +92,116 @@ class Tree {
       }
     }
   }
+
+  /* using iteration
+
+  levelOrder(fn) {
+    if (!this.root) return;
+    const queue = [this.root];
+    while (queue.length) {
+      const current = queue.shift();
+      fn(current);
+      if (current.left) queue.push(current.left);
+      if (current.right) queue.push(current.right);
+    }
+  }
+  */
+
+  levelOrder(fn) {
+    let values = [];
+
+    if (!fn) {
+      fn = (node) => {
+        values.push(node.value);
+      };
+    }
+    this._levelOrder(this.root, fn);
+
+    console.log(values);
+    return values;
+  }
+
+  _levelOrder(node, fn) {
+    if (!node) return;
+    fn(node);
+
+    this._levelOrder(node.left, fn);
+    this._levelOrder(node.right, fn);
+  }
+
+  logNodeValue(node) {
+    console.log(node.value);
+  }
+
+  preorder(root, fn = null) {
+    let result = [];
+    if (root === null) return result;
+
+    if (fn === null) {
+      result.push(root.value);
+    } else {
+      fn(root.value);
+    }
+    result = result.concat(this.preorder(root.left, fn));
+    result = result.concat(this.preorder(root.right, fn));
+    return result;
+  }
+
+  inorder(root, fn = null) {
+    let result = [];
+    if (root === null) return result;
+
+    result = result.concat(this.inorder(root.left, fn));
+    if (fn === null) {
+      result.push(root.value);
+    } else {
+      fn(root.value);
+    }
+
+    result = result.concat(this.inorder(root.right, fn));
+
+    return result;
+  }
+
+  postorder(root, fn = null) {
+    let result = [];
+    if (root === null) return result;
+
+    result = result.concat(this.postorder(root.left));
+    result = result.concat(this.postorder(root.right));
+    if (fn === null) {
+      result.push(root.value);
+    } else {
+      fn(root.value);
+    }
+
+    return result;
+  }
 }
 
 const bst = new Tree();
 
-bst.insert(12);
-bst.insert(30);
-bst.insert(45);
-bst.insert(50);
+bst.insert(10);
+bst.insert(5);
+bst.insert(15);
+bst.insert(3);
+bst.insert(7);
+bst.insert(21);
 
 prettyPrint(bst.root);
 
-bst.delete(45);
+bst.delete(21);
 prettyPrint(bst.root);
 
 console.log(bst.find(bst.root, 30));
+
+bst.levelOrder();
+
+console.log("<--preorder-->");
+console.log(bst.preorder(bst.root));
+
+console.log("<--inorder-->");
+console.log(bst.inorder(bst.root));
+
+console.log("<--postorder-->");
+console.log(bst.postorder(bst.root));
