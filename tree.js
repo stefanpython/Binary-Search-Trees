@@ -195,6 +195,25 @@ class Tree {
 
     return Math.max(leftHeight, rightHeight) + 1;
   }
+
+  depth(node, value, level = 0) {
+    if (node === null) return -1;
+    if (node.value === value) return level;
+    let left = this.depth(node.left, value, level + 1);
+    if (left !== -1) return left;
+    return this.depth(node.right, value, level + 1);
+  }
+
+  isBalanced(root) {
+    if (this.height(root.left) - this.height(root.right) <= 1) {
+      return true;
+    } else return false;
+  }
+
+  reBalance() {
+    const inOrderList = this.inorder();
+    this.root = this.buildTree(inOrderList);
+  }
 }
 
 const bst = new Tree();
@@ -211,8 +230,10 @@ prettyPrint(bst.root);
 bst.delete(21);
 prettyPrint(bst.root);
 
+console.log("Is value present in BST?:");
 console.log(bst.find(bst.root, 30));
 
+console.log("Levelorder:");
 bst.levelOrder();
 
 console.log("<--preorder-->");
@@ -223,7 +244,11 @@ console.log(bst.inorder(bst.root));
 
 console.log("<--postorder-->");
 console.log(bst.postorder(bst.root));
-
+console.log("Max value of bst:");
 console.log(bst.max(bst.root));
-
+console.log("Height of tree:");
 console.log(bst.height());
+console.log("Depth of node value:");
+console.log(bst.depth(bst.root, 5));
+console.log("Is BST balanced?:");
+console.log(bst.isBalanced(bst.root));
