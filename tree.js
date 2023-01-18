@@ -157,7 +157,6 @@ class Tree {
     } else {
       fn(root.value);
     }
-
     result = result.concat(this.inorder(root.right, fn));
 
     return result;
@@ -176,6 +175,25 @@ class Tree {
     }
 
     return result;
+  }
+
+  max(root) {
+    if (root === null) {
+      console.log("Error: Tree is empty.");
+      return -1;
+    } else if (root.right === null) {
+      return root.value;
+    }
+    return this.max(root.right);
+  }
+
+  height(node = this.root) {
+    if (node === null) return -1;
+
+    let leftHeight = this.height(node.left);
+    let rightHeight = this.height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
   }
 }
 
@@ -205,3 +223,7 @@ console.log(bst.inorder(bst.root));
 
 console.log("<--postorder-->");
 console.log(bst.postorder(bst.root));
+
+console.log(bst.max(bst.root));
+
+console.log(bst.height());
