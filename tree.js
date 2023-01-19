@@ -1,4 +1,5 @@
 const prettyPrint = require("./prettyPrint");
+const randomArray = require("./randomArray");
 
 class Node {
   constructor(value) {
@@ -216,39 +217,43 @@ class Tree {
   }
 }
 
-const bst = new Tree();
+const bst = new Tree(randomArray);
 
-bst.insert(10);
-bst.insert(5);
-bst.insert(15);
-bst.insert(3);
-bst.insert(7);
-bst.insert(21);
+const driver = () => {
+  // bst.insert(10);
+  // bst.insert(5);
+  // bst.insert(15);
+  // bst.insert(3);
+  // bst.insert(7);
+  // bst.insert(21);
 
-prettyPrint(bst.root);
+  prettyPrint(bst.root);
 
-bst.delete(21);
-prettyPrint(bst.root);
+  bst.delete(21);
+  prettyPrint(bst.root);
 
-console.log("Is value present in BST?:");
-console.log(bst.find(bst.root, 30));
+  console.log("Is value present in BST?:");
+  console.log(bst.find(bst.root, 30));
 
-console.log("Levelorder:");
-bst.levelOrder();
+  console.log("Levelorder:");
+  bst.levelOrder();
 
-console.log("<--preorder-->");
-console.log(bst.preorder(bst.root));
+  console.log("<--preorder-->");
+  console.log(bst.preorder(bst.root));
 
-console.log("<--inorder-->");
-console.log(bst.inorder(bst.root));
+  console.log("<--inorder-->");
+  console.log(bst.inorder(bst.root));
 
-console.log("<--postorder-->");
-console.log(bst.postorder(bst.root));
-console.log("Max value of bst:");
-console.log(bst.max(bst.root));
-console.log("Height of tree:");
-console.log(bst.height());
-console.log("Depth of node value:");
-console.log(bst.depth(bst.root, 5));
-console.log("Is BST balanced?:");
-console.log(bst.isBalanced(bst.root));
+  console.log("<--postorder-->");
+  console.log(bst.postorder(bst.root));
+  console.log("Max value of bst:");
+  console.log(bst.max(bst.root));
+  console.log("Height of tree:");
+  console.log(bst.height());
+  console.log("Depth of node value:");
+  console.log(bst.depth(bst.root, 5));
+  console.log("Is BST balanced?:");
+  console.log(bst.isBalanced(bst.root));
+};
+
+driver();
